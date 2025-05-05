@@ -14,7 +14,7 @@ export const Home = () => {
   
   // מידע על מוצרים מובילים - בפרויקט אמיתי יגיע מהשרת
   const featuredProducts = [
-    { id: 1, name: 'חולצת פולו כחולה', price: 49.90, image: '/images/blue-polo.jpg', rating: 4.8, sales: 120 },
+    { id: 1, name: 'חולצת פולו ורודה', price: 49.90, image: '/images/blue-polo.jpg', rating: 4.8, sales: 120 },
     { id: 2, name: 'מכנסי בית ספר שחורים', price: 79.90, image: '/images/black-pants.jpg', rating: 4.6, sales: 95 },
     { id: 3, name: 'חצאית בית ספר כחולה', price: 69.90, image: '/images/blue-skirt.jpg', rating: 4.7, sales: 85 },
     { id: 4, name: 'סווטשירט עם לוגו', price: 99.90, image: '/images/sweatshirt.jpg', rating: 4.9, sales: 150 }
