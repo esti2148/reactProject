@@ -1,0 +1,18 @@
+body{
+    direction: rtl;
+   margin-top: 200px;
+}
+.title{
+    /* border: 2px solid black !important; */
+   
+    margin-right: 100px !important;
+}
+.titleSub{
+    color: rgb(113, 201, 230) !important;
+    font-size: 20px !important;
+}
+.title2{
+    color: rgb(61, 189, 231) !important;
+    font-size: 30px !important;
+
+}
