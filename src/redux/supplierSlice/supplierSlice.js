@@ -13,7 +13,9 @@ const INITIAL_STATE = {
        initialState: INITIAL_STATE,
        reducers: {
            ///.......
-          
+          setSuppliers: (state, action) => {
+              state.suppliers = action.payload;
+          }
        },
        
        extraReducers: (builder) => {

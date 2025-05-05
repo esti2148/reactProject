@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import {
     Dialog, DialogTitle, DialogContent, DialogActions,
     Button, TextField, Grid, Typography, IconButton,
-    Paper, Slide, InputAdornment
+    Paper, Slide, InputAdornment, Box, FormControl, InputLabel, Select, MenuItem
 } from '@mui/material';
 import {
     Close as CloseIcon,
@@ -38,9 +38,10 @@ export const EditAddProduct = ({ customer, onClose, isAdd, onSave }) => {
         stock: customer?.stock || 0
     });
 
-    
+
     const sup = useSelector(state => state.supplier.supplierCurrent)
     const dispatch = useDispatch()
+    const supplierList = useSelector(state => state.supplier.suppliers)
     // עדכון הנתונים כאשר הלקוח משתנה
     useEffect(() => {
         if (customer) {
@@ -56,23 +57,27 @@ export const EditAddProduct = ({ customer, onClose, isAdd, onSave }) => {
             });
         }
     }, [customer]);
-    useEffect(()=>{
+    useEffect(() => {
         debugger
-            setnewProduct({ ...product, idPurveyor: sup.idPurveyor })
-            // dispatch(addProductThunk(product))
-    },[sup])
+        setnewProduct({ ...product, idPurveyor: sup.id })
+        // dispatch(addProductThunk(product))
+    }, [sup])
 
-    const handleSave = async() => {
+    const handleSave = async () => {
+        debugger
         // בדיקת תקינות הנתונים
         if (!product.productName.trim()) {
             alert('נא להזין מוצר');
             // return;
         }
         else {
-            
+
             let name = product.namePurveyor
-           dispatch(getByNameSuppliersThunk(name))
-         
+            const namee = await dispatch(getByNameSuppliersThunk(name))
+            if (namee.payload != undefined) {
+                setnewProduct({ ...product, idPurveyor: namee.payload.id })
+
+            }
             // שליחת הנתונים המעודכנים/החדשים לקומפוננטת האב
             onSave(product, isAdd);
             onClose();
@@ -81,7 +86,7 @@ export const EditAddProduct = ({ customer, onClose, isAdd, onSave }) => {
     const handleEdit = () => {
 
         let id = product.id
-        dispatch(updateProductThunk({ id, product }));
+        dispatch(updateProductThunk({ id: id, product: product }));
         dispatch(getProductThunk());
         onClose();
     }
@@ -89,7 +94,7 @@ export const EditAddProduct = ({ customer, onClose, isAdd, onSave }) => {
     const handleClose = () => {
         onClose();
     }
-   
+
 
     return (
         <Dialog
@@ -219,31 +224,24 @@ export const EditAddProduct = ({ customer, onClose, isAdd, onSave }) => {
                             />
                         </Grid>
 
-                        {/* ספק */}
-                        <Grid item xs={12} md={6}>
-                            <TextField
-                                fullWidth
-                                label="ספק"
-                                variant="outlined"
-                                placeholder="הזן שם ספק "
-                                value={product.namePurveyor}
-                                onChange={e => setnewProduct({ ...product, namePurveyor: e.target.value })}
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <EmailIcon color="primary" />
-                                        </InputAdornment>
-                                    ),
-                                }}
-                                className="text-field"
-                            />
-                            <select>
-                                <option>dsfv</option>
-                                <option>dsfv</option>
+                        {/* ספק */}        
+                        <Box className="select" sx={{ minWidth: 120 }}>
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label">ספק </InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    label="ספק "
+                                    className="tool"
+                                    value={product.namePurveyor} onChange={x => setnewProduct({ ...product, namePurveyor: x.target.value })} >
+                                    { supplierList.map(supp => {
+                                        return <MenuItem key={supp.id} value={supp.name}>{supp.name}</MenuItem>
 
-                            </select>
-                        </Grid>
-
+                                    })}
+                                
+                                </Select>
+                            </FormControl>
+                        </Box>
                         {/* סטוק*/}
 
                         <Grid item xs={12}>
