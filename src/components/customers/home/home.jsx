@@ -11,7 +11,7 @@ export const Home = () => {
   const navigate = useNavigate();
   const isExist = useSelector(state => state.customer.isExist);
   const currentUser = useSelector(state => state.customer.currentCustomer);
-  
+
   // מידע על מוצרים מובילים - בפרויקט אמיתי יגיע מהשרת
   const featuredProducts = [
     { id: 1, name: 'חולצת פולו כחולה', price: 49.90, image: '/images/blue-polo.jpg', rating: 4.8, sales: 120 },

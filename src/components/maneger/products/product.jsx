@@ -1,4 +1,3 @@
-// import { useEffect, useRef, useState } from 'react';
 // import { useDispatch, useSelector } from "react-redux";
 // import { getProductThunk } from '../../../redux/productSlice/getProductThunk';
 // import { TableCell, TableContainer, TableHead, TableRow, TableBody, Table } from "@mui/material";

@@ -28,15 +28,17 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export const EditAddProduct = ({ customer, onClose, isAdd, onSave }) => {
     const [product, setnewProduct] = useState({
-        id: customer.id,
+        id: customer?.id,
         productName: customer?.productName || '',
         dscribe: customer?.dscribe || '',
-        size: customer?.size || '',
-        price: customer?.price || '',
-        idPurveyor: customer.idPurveyor || '',
+        size: customer?.size || 0,
+        price: customer?.price || 0,
+        idPurveyor: customer.idPurveyor || 0,
         namePurveyor: customer?.namePurveyor || '',
-        stock: customer?.stock || ''
+        stock: customer?.stock || 0
     });
+
+    
     const sup = useSelector(state => state.supplier.supplierCurrent)
     const dispatch = useDispatch()
     // עדכון הנתונים כאשר הלקוח משתנה
