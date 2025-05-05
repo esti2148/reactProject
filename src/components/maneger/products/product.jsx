@@ -150,6 +150,7 @@ import { EditAddProduct } from "./editAddProduct/editAddProduct";
 import { getProductThunk } from "../../../redux/productSlice/getProductThunk";
 import { getSuppliersThunk } from "../../../redux/supplierSlice/getSuppliersThunk";
 import { addProductThunk } from "../../../redux/productSlice/addProductThunk";
+import { getProductAndSuppliers } from "../../../redux/productSlice/getProductAndSuppliers";
 
 export const ProductManeger = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
@@ -161,13 +162,13 @@ export const ProductManeger = () => {
 
     const dispatch = useDispatch();
     const products = useSelector(state => state.Product.products);
-    // const supplierList = useSelector(state => state.supplier.suppliers)
+    //const supplierList = useSelector(state => state.supplier.suppliers)
     // const supplier = useSelector(state => state.supplier.supplierCurrent.name)
     const loading = useSelector(state => state.Product.loading);
     const error = useSelector(state => state.Product.error);
 
     useEffect(() => {
-        dispatch(getProductThunk());
+        dispatch(getProductAndSuppliers());
         // dispatch(getSuppliersThunk())
     }, [dispatch]);
 

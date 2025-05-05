@@ -1,8 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+
 export const addProductThunk = createAsyncThunk(
     'addProductThunk',
     async (product) => {
+       
         debugger
         const response = await fetch(`https://localhost:7267/api/Products/Add`,
             {
@@ -14,6 +16,7 @@ export const addProductThunk = createAsyncThunk(
             }
         );
         const data = await response.json();
+    
         return data;
 
     }
