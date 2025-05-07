@@ -76,7 +76,7 @@ export const Order = () => {
     return (
         <div className="order-page">
             <div className="order-header">
-                <h1 >הזמנת מוצרים 😁</h1>
+                <h1 >הזמנת מוצרים</h1>
                 <p>בחרו מהמגוון הרחב של תלבושות בית ספר איכותיות</p>
             </div>
             
