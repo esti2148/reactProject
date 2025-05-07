@@ -80,16 +80,19 @@ export const EditAddProduct = ({ customer, onClose, isAdd, onSave }) => {
 
             }
             // שליחת הנתונים המעודכנים/החדשים לקומפוננטת האב
-            onSave(product, isAdd);
+            onSave({...product,idPurveyor: namee.payload.id }, isAdd);
             onClose();
         }
     }
-    const handleEdit = () => {
+    const handleEdit =async () => {
 
         let id = product.id
-        dispatch(updateProductThunk({ id: id, product: product }));
-        dispatch(getProductThunk());
-        onClose();
+        let name = product.namePurveyor
+        const namee = await dispatch(getByNameSuppliersThunk(name))
+        if (namee.payload != undefined) {
+        dispatch(updateProductThunk({ id: id, product: {...product,idPurveyor:namee.payload.id} }));
+        //dispatch(getProductThunk());
+        onClose();}
     }
 
     const handleClose = () => {
@@ -234,7 +237,10 @@ export const EditAddProduct = ({ customer, onClose, isAdd, onSave }) => {
                                     id="demo-simple-select"
                                     label="ספק "
                                     className="tool"
-                                    value={product.namePurveyor} onChange={x => setnewProduct({ ...product, namePurveyor: x.target.value })} >
+                                    value={product.namePurveyor}
+                                     onChange={x =>
+                                     setnewProduct({ ...product, namePurveyor: x.target.value })
+                                     } >
                                     { supplierList.map(supp => {
                                         return <MenuItem key={supp.id} value={supp.name}>{supp.name}</MenuItem>
 
