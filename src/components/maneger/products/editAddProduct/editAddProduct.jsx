@@ -40,8 +40,9 @@ export const EditAddProduct = ({ customer, onClose, isAdd, onSave }) => {
 
 
     const sup = useSelector(state => state.supplier.supplierCurrent)
+    console.log("sup"+sup);
     const dispatch = useDispatch()
-    const supplierList = useSelector(state => state.supplier.suppliers)
+    const supplierList = useSelector((state) => state.Product?.suppliers || []);
     // עדכון הנתונים כאשר הלקוח משתנה
     useEffect(() => {
         if (customer) {

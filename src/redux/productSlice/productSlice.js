@@ -7,6 +7,7 @@ import { getProductAndSuppliers } from "./getProductAndSuppliers";
 const INITIAL_STATE = {
 
    products:[],
+   suppliers: [],
    currentProduct:{}
 
   }
@@ -14,7 +15,16 @@ const INITIAL_STATE = {
       name: 'Product',
       initialState: INITIAL_STATE,
       reducers: {
-          ///.......
+        setProducts: (state, action) => {
+          state.products = action.payload;
+        },
+        setSuppliers: (state, action) => {
+          state.suppliers = action.payload;
+        },
+        setProductsAndSuppliers: (state, action) => {
+          state.products = action.payload.products; 
+          state.suppliers = action.payload.suppliers || action.payload.supplaiers;
+        }
          
       },
       extraReducers: (builder) => {
@@ -48,6 +58,7 @@ const INITIAL_STATE = {
 
       builder.addCase(updateProductThunk.fulfilled, (state, action) => {
         state.products=action.payload
+
       });
       builder.addCase(updateProductThunk.rejected,(state,action)=>{
           
@@ -59,7 +70,15 @@ const INITIAL_STATE = {
       });
 
       builder.addCase(getProductAndSuppliers.fulfilled, (state, action) => {
-        state.currentProduct=action.payload
+        if (action.payload.products) {
+          state.products = action.payload.products;
+        }
+        // בדוק אם יש שדה suppliers או supplaiers (עם שגיאת כתיב)
+        if (action.payload.suppliers) {
+          state.suppliers = action.payload.suppliers;
+        } else if (action.payload.supplaiers) {
+          state.suppliers = action.payload.supplaiers;
+        }
       });
       builder.addCase(getProductAndSuppliers.rejected,(state,action)=>{
           
@@ -67,3 +86,5 @@ const INITIAL_STATE = {
     }
 
 });
+export const { setProducts, setSuppliers, setProductsAndSuppliers } = productSlice.actions;
+export default productSlice.reducer;
