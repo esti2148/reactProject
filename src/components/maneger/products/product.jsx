@@ -160,16 +160,33 @@ export const ProductManeger = () => {
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [productToDelete, setProductToDelete] = useState(null);
 
+    const fullState = useSelector(state => state);
+    console.log("מבנה מלא של ה-state:", fullState);
+    
+    // בדוק את ה-state של Product
+    const productState = useSelector(state => state.Product);
+    console.log("מבנה ה-Product state:", productState);
     const dispatch = useDispatch();
-    const products = useSelector(state => state.Product.products);
+    const products = useSelector((state) => state.Product?.products|| []);
     //const supplierList = useSelector(state => state.supplier.suppliers)
     // const supplier = useSelector(state => state.supplier.supplierCurrent.name)
     const loading = useSelector(state => state.Product.loading);
     const error = useSelector(state => state.Product.error);
 
     useEffect(() => {
-        dispatch(getProductAndSuppliers());
-        // dispatch(getSuppliersThunk())
+        debugger
+        // הוסף console.log לפני הקריאה
+        console.log("מנסה לטעון נתונים...");
+        
+        dispatch(getProductAndSuppliers())
+        .then(response => {
+        // בדוק את התשובה שחוזרת מהשרת
+        console.log("תשובה מהשרת:", response);
+        console.log("תשובה מהשרת - payload:", response.payload);
+      })
+      .catch(error => {
+        console.error("שגיאה בטעינת נתונים:", error);
+      });
     }, [dispatch]);
 
     const handleAddProduct = () => {
@@ -376,14 +393,14 @@ export const ProductManeger = () => {
                                             className={`table-row`}
                                         >
 
-                                            {/* <TableCell align="center" className="institute-id-cell">
+                                          <TableCell align="center" className="institute-id-cell">
                                                 <Chip
-                                                    label={p.productName}
+                                                    label={p.id}
                                                     color="primary"
                                                     variant="outlined"
                                                     className="id-chip"
                                                 />
-                                            </TableCell> */}
+                                            </TableCell>  
                                             <TableCell align="center" className="institute-name-cell">
                                                 <Box className="institute-name-container">
                                                     <Typography className="institute-name">

@@ -14,7 +14,7 @@ const INITIAL_STATE = {
        reducers: {
            ///.......
           setSuppliers: (state, action) => {
-              state.suppliers = action.payload;
+              state.suppliers = action.payload.suppliers;
           }
        },
        
@@ -56,3 +56,4 @@ const INITIAL_STATE = {
       }
       
  });
+ export const {setSuppliers } = supplierSlice.actions;

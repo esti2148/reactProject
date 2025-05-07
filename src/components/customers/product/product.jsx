@@ -87,6 +87,7 @@ import './product.css';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToSal, changeTotalSal, changeCount } from '../../../redux/customerSlice/customerSlice';
+import { getProductThunk } from '../../../redux/productSlice/getProductThunk';
 
 export const Product = (props) => {
     const [hiddenSal, setHiddenSal] = useState(false);
@@ -104,7 +105,10 @@ export const Product = (props) => {
             setCount(Number(c?.qty));
         }
     }, []);
-
+    useEffect(() => {
+        debugger
+        dispatch(getProductThunk())
+    }, []);
     const minus = () => {
         if (count > 0) {
             const cc = Number(count - 1);
