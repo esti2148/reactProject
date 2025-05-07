@@ -2,6 +2,9 @@ import { useSelector } from 'react-redux';
 import './menu.css';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import Logo from './logo'; // ייבוא קומפוננטת הלוגו החדשה
+
+
 
 export const Menu = () => {
     const isExist = useSelector(state => state.customer.isExist);
@@ -29,7 +32,7 @@ export const Menu = () => {
         <div className='menu-container'>
             <header className={`main-header ${scrolled ? 'scrolled' : ''}`}>
                 <div className="logo" onClick={() => navigate("/")}>
-                    <img src="/images/logo.png" alt="תלבושות בית ספר" />
+                    <Logo height={40} />
                     <span>תלבושות בית ספר</span>
                 </div>
 

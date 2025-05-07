@@ -2,8 +2,9 @@ import './home.css';
 
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FaTruck, FaTshirt, FaUndo, FaHeadset, FaStar, FaQuoteRight, FaArrowLeft, FaSignInAlt, FaUserPlus, FaUser } from 'react-icons/fa';
+import { getCustomerThunk } from '../../../redux/customerSlice/getCustomerThunk';
 
 // import './home.css';
 
@@ -11,13 +12,14 @@ export const Home = () => {
   const navigate = useNavigate();
   const isExist = useSelector(state => state.customer.isExist);
   const currentUser = useSelector(state => state.customer.currentCustomer);
+  const dispatch = useDispatch()
 
   // מידע על מוצרים מובילים - בפרויקט אמיתי יגיע מהשרת
   const featuredProducts = [
     { id: 1, name: 'חולצת פולו כחולה', price: 49.90, image: '/images/blue-polo.jpg', rating: 4.8, sales: 120 },
-    { id: 2, name: 'מכנסי בית ספר שחורים', price: 79.90, image: '/images/black-pants.jpg', rating: 4.6, sales: 95 },
+    { id: 2, name: 'סרפן בית ספר כחול', price: 79.90, image: '/images/black-pants.jpg', rating: 4.6, sales: 95 },
     { id: 3, name: 'חצאית בית ספר כחולה', price: 69.90, image: '/images/blue-skirt.jpg', rating: 4.7, sales: 85 },
-    { id: 4, name: 'סווטשירט עם לוגו', price: 99.90, image: '/images/sweatshirt.jpg', rating: 4.9, sales: 150 }
+    { id: 4, name: 'סוודר', price: 99.90, image: '/images/sweatshirt.jpg', rating: 4.9, sales: 150 }
   ];
 
   // מידע על בתי ספר - בפרויקט אמיתי יגיע מהשרת
@@ -60,6 +62,9 @@ export const Home = () => {
     }
   ];
 
+  const mySchools = useSelector(state => state.customer.customerOrders);
+
+  // const mySchools = 
   // סטטיסטיקות - בפרויקט אמיתי יגיע מהשרת
   const statistics = [
     { id: 1, label: 'בתי ספר', value: '120+' },
@@ -96,9 +101,9 @@ export const Home = () => {
   // קטגוריות מוצרים - בפרויקט אמיתי יגיע מהשרת
   const categories = [
     { id: 1, name: 'חולצות', image: '/images/shirts-category.jpg', count: 45 },
-    { id: 2, name: 'מכנסיים', image: '/images/pants-category.jpg', count: 32 },
+    { id: 2, name: 'סרפנים', image: '/images/pants-category.jpg', count: 32 },
     { id: 3, name: 'חצאיות', image: '/images/skirts-category.jpg', count: 28 },
-    { id: 4, name: 'סווטשירטים', image: '/images/sweatshirts-category.jpg', count: 20 }
+    { id: 4, name: 'סוודרים', image: '/images/sweatshirts-category.jpg', count: 20 }
   ];
 
   // פונקציה להוספה לסל
@@ -107,6 +112,11 @@ export const Home = () => {
     // כאן תהיה הלוגיקה להוספה לסל
     console.log(`הוספת מוצר ${productId} לסל`);
   };
+
+  useEffect(() => {
+    dispatch(getCustomerThunk());
+    console.log(mySchools + 'mySchools');
+  }, [dispatch]);
 
   return (
     <div className="home-new-container">
@@ -290,15 +300,15 @@ export const Home = () => {
           <div className="section-line"></div>
         </div>
         <div className="schools-slider">
-          {schools.map(school => (
-            <div className="school-card-new" key={school.id}>
+          {mySchools.map(school => (
+            <div className="school-card-new" key={school.instituteId}>
               <div className="school-image-new">
-                <img src={school.image} alt={school.name} />
+                <img src={school.image} alt={school.instituteName} />
                 <div className="school-overlay">
                   <div className="school-details">
-                    <p><strong>מיקום:</strong> {school.location}</p>
+                    {/* <p><strong>מיקום:</strong> {school.location}</p>
                     <p><strong>תלמידים:</strong> {school.students}</p>
-                    <p><strong>הצטרף בשנת:</strong> {school.yearJoined}</p>
+                    <p><strong>הצטרף בשנת:</strong> {school.yearJoined}</p> */}
                   </div>
                 </div>
               </div>
@@ -412,7 +422,7 @@ export const Home = () => {
           <p>הירשמו לניוזלטר שלנו וקבלו עדכונים על מבצעים, מוצרים חדשים וטיפים לתחזוקת תלבושות</p>
           <div className="newsletter-form">
             <input type="email" placeholder="הזינו את כתובת האימייל שלכם" />
-            <button className="newsletter-button">הרשמה</button>
+            <button className="newsletter-button"  onClick={() => navigate("registration")}>הרשמה</button>
           </div>
         </div>
       </section>
@@ -424,6 +434,7 @@ export const Home = () => {
           <div className="section-line"></div>
         </div>
         <div className="contact-container">
+
           <div className="contact-info">
             <div className="contact-item">
               <div className="contact-icon phone-icon"></div>
